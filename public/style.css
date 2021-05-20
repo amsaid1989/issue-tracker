@@ -1,10 +1,67 @@
 * {
   margin: 0px;
   padding: 0px;
+  box-sizing: border-box;
 }
 
 body {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 75%;
+  margin: 0 auto;
   padding: 10px;
+}
+
+hr {
+  width: 100%;
+}
+
+#testui {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+article {
+  width: 60%;
+  margin: 1em auto;
+}
+
+.example-headers {
+  margin: 1em auto 2em auto;
+}
+
+h3 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+form input,
+form textarea,
+form button,
+#close-issue {
+  width: 100%;
+  margin: 0.25em auto;
+}
+
+#close-issue {
+  display: flex;
+  justify-content: flex-start;
+}
+
+#close-issue input {
+  width: min-content;
+  margin: 0;
+  flex: 1 4;
+}
+
+#close-issue label {
+  flex: 200 1;
 }
 
 .issue {

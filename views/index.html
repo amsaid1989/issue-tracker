@@ -15,11 +15,16 @@
       </h1>
     </header>
     <section style="margin: 0 50px;">
-      <h3>Example <code>GET</code> usage</h3>
-      <code>/api/issues/{project}</code><br>
-      <code>/api/issues/{project}?open=true&amp;assigned_to=Joe</code><br>
-      <h3>Example return</h3>
-      <pre>
+      <article>
+        <div class="example-headers">
+          <h3>Example <code>GET</code> usage</h3>
+          <code>/api/issues/{project}</code><br>
+          <code>/api/issues/{project}?open=true&amp;assigned_to=Joe</code><br>
+        </div>
+      </article>
+      <article>
+        <h3>Example return</h3>
+        <pre>
 <code>[
   { 
     "_id": "5871dda29faedc3491ff93bb",
@@ -36,38 +41,50 @@
  ]
 </code>
 </pre>
+      </article>
     </section>
-    <hr style='margin: 0 50px'>
+    <hr>
     <section id='testui' style='margin-left: 50px;'>
-      <h3>Examples</h3>
-      Go to <a href='/api/issues/apitest/'><code>/api/issues/apitest/</code></a>  project
+      <div class="example-headers">
+        <h3>Examples</h3>
+        <p>Go to <a href='/api/issues/apitest/'><code>/api/issues/apitest/</code></a></p>
+      </div>
       <h2 style="text-align: left">API Tests</h2>
-      <h3>Submit issue on <i>apitest</i></h3>
-      <form id="testForm" class="border">
-        <input type="text" name="issue_title" placeholder="*Title" style="width: 100px" required=''><br>
-        <textarea type="text" name="issue_text" placeholder="*Text" style="width: 100px" required=''></textarea><br>
-        <input type="text" name="created_by" placeholder="*Created by" style="width: 100px" required=''><br>
-        <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px"><br>
-        <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 100px"><br>
-        <button type="submit">Submit Issue</button>
-      </form><br>
-      <h3>Update issue on <i>apitest</i> (Change any or all to update issue on the _id supplied)</h3>
-      <form id="testForm2" class="border">
-        <input type="text" name="_id" placeholder="*_id" style="width: 100px" required=''><br>
-        <input type="text" name="issue_title" placeholder="(opt)Title" style="width: 100px"><br>
-        <textarea type="text" name="issue_text" placeholder="(opt)Text" style="width: 100px"></textarea><br>
-        <input type="text" name="created_by" placeholder="(opt)Created by" style="width: 100px"><br>
-        <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px"><br>
-        <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 100px"><br>
-        <label><input type="checkbox" name="open" value="false"> Check to close issue</label><br>
-        <button type="submit">Submit Issue</button>
-      </form><br>
-      <h3>Delete issue on <i>apitest</i></h3>
-      <form id="testForm3" class="border">
-        <input type="text" name="_id" placeholder="_id" style="width: 100px" required=''><br>
-        <button type="submit">Delete Issue</button>
-      </form>
-      <code id='jsonResult'></code>
+      <article id="submit-issue">
+        <h3>Submit issue on <i>apitest</i></h3>
+        <form id="testForm" class="border">
+          <input type="text" name="issue_title" placeholder="*Title" required=''><br>
+          <textarea type="text" name="issue_text" placeholder="*Text" required=''></textarea><br>
+          <input type="text" name="created_by" placeholder="*Created by" required=''><br>
+          <input type="text" name="assigned_to" placeholder="(opt)Assigned to"><br>
+          <input type="text" name="status_text" placeholder="(opt)Status text"><br>
+          <button type="submit">Submit Issue</button>
+        </form><br>
+      </article>
+      <article id="update-issue">
+        <h3>Update issue on <i>apitest</i> (Change any or all to update issue on the _id supplied)</h3>
+        <form id="testForm2" class="border">
+          <input type="text" name="_id" placeholder="*_id" required=''><br>
+          <input type="text" name="issue_title" placeholder="(opt)Title"><br>
+          <textarea type="text" name="issue_text" placeholder="(opt)Text"></textarea><br>
+          <input type="text" name="created_by" placeholder="(opt)Created by"><br>
+          <input type="text" name="assigned_to" placeholder="(opt)Assigned to"><br>
+          <input type="text" name="status_text" placeholder="(opt)Status text"><br>
+          <div id="close-issue">
+            <input type="checkbox" name="open" value="false">
+            <label>Check to close issue</label><br>
+          </div>
+          <button type="submit">Submit Issue</button>
+        </form><br>
+      </article>
+      <article id="delete-issue">
+        <h3>Delete issue on <i>apitest</i></h3>
+        <form id="testForm3" class="border">
+          <input type="text" name="_id" placeholder="_id" required=''><br>
+          <button type="submit">Delete Issue</button>
+        </form>
+        <code id='jsonResult'></code>
+      </article>
     </section>
     <hr style='margin: 50px; margin-top: 200px'>
     <!-- Your web-app is https, so your scripts need to be too -->
