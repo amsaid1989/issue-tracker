@@ -14,42 +14,42 @@ let app = express();
 app.use("/public", express.static(process.cwd() + "/public"));
 app.use(cors({ origin: "*" })); //For FCC testing purposes only
 
-mongoose
-    .connect(process.env.MONGO_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-    })
-    .then(() => {
-        console.log("connected to DB successfully");
+if (process.env.NODE_ENV !== "test") {
+    mongoose
+        .connect(process.env.MONGO_URL, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true,
+        })
+        .then(() => {
+            app.use(bodyParser.json());
+            app.use(bodyParser.urlencoded({ extended: true }));
 
-        app.use(bodyParser.json());
-        app.use(bodyParser.urlencoded({ extended: true }));
+            //Sample front-end
+            app.route("/:project/").get(function (req, res) {
+                res.sendFile(process.cwd() + "/views/issue.html");
+            });
 
-        //Sample front-end
-        app.route("/:project/").get(function (req, res) {
-            res.sendFile(process.cwd() + "/views/issue.html");
+            //Index page (static HTML)
+            app.route("/").get(function (req, res) {
+                res.sendFile(process.cwd() + "/views/index.html");
+            });
+
+            //For FCC testing purposes
+            fccTestingRoutes(app);
+
+            //Routing for API
+            apiRoutes(app);
+
+            //404 Not Found Middleware
+            app.use(function (req, res, next) {
+                res.status(404).type("text").send("Not Found");
+            });
+        })
+        .catch((err) => {
+            console.error(err);
         });
-
-        //Index page (static HTML)
-        app.route("/").get(function (req, res) {
-            res.sendFile(process.cwd() + "/views/index.html");
-        });
-
-        //For FCC testing purposes
-        fccTestingRoutes(app);
-
-        //Routing for API
-        apiRoutes(app);
-
-        //404 Not Found Middleware
-        app.use(function (req, res, next) {
-            res.status(404).type("text").send("Not Found");
-        });
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+}
 
 //Start our server and tests!
 app.listen(process.env.PORT || 3000, function () {
