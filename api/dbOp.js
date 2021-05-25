@@ -1,6 +1,33 @@
+require("dotenv").config();
+const mongoose = require("mongoose");
+const MongoMemoryServer = require("mongodb-memory-server").MongoMemoryServer;
 const { Issue } = require("./models");
 
+function getURI() {
+    return new Promise((resolve, reject) => {
+        if (process.env.NODE_ENV === "test") {
+            const memoryServer = new MongoMemoryServer();
+
+            memoryServer.getUri().then((MONGO_URI) => {
+                resolve(MONGO_URI);
+            });
+        } else {
+            resolve(process.env.MONGO_URI);
+        }
+    });
+}
+
 module.exports = {
+    connect: function () {
+        return getURI().then((URI) => {
+            mongoose.connect(URI, {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+                useCreateIndex: true,
+            });
+        });
+    },
+
     addIssue: function (issueObj) {
         const doc = new Issue({
             issue_title: issueObj.issue_title,

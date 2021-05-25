@@ -12,26 +12,6 @@ mongoose.Promise = Promise;
 
 describe("Unit Tests", function () {
     describe("Database operations", function () {
-        before(function (done) {
-            mongoServer
-                .getUri()
-                .then((mongoURI) => {
-                    mongoose
-                        .connect(mongoURI, {
-                            useNewUrlParser: true,
-                            useUnifiedTopology: true,
-                        })
-                        .then(() => done());
-                })
-                .catch((err) => {
-                    console.error(err);
-
-                    assert.fail();
-
-                    done(err);
-                });
-        });
-
         describe("addIssue", function () {
             it("should insert an issue to the database with required fields completed", function (done) {
                 const issue = {
