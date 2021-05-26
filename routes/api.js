@@ -30,13 +30,13 @@ module.exports = function (app) {
                 dbOp.addIssue(issue)
                     .then((doc) => {
                         res.json({
+                            assigned_to: doc["assigned_to"],
+                            status_text: doc["status_text"],
+                            open: doc["open"],
                             _id: doc["_id"],
                             issue_title: doc["issue_title"],
                             issue_text: doc["issue_text"],
                             created_by: doc["created_by"],
-                            open: doc["open"],
-                            assigned_to: doc["assigned_to"],
-                            status_text: doc["status_text"],
                             created_on: doc["created_on"],
                             updated_on: doc["updated_on"],
                         });
@@ -57,7 +57,7 @@ module.exports = function (app) {
 
             if (!id) {
                 res.json({
-                    error: "missing id",
+                    error: "missing _id",
                 });
             } else if (updateFieldCount === 0) {
                 res.json({
