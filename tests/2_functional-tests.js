@@ -426,5 +426,93 @@ describe("Functional Tests", function () {
                     });
             });
         });
+
+        describe("DELETE /apitest", function () {
+            it("Delete an issue: DELETE request to /api/issues/apitest", function (done) {
+                const request = chai.request(server).keepOpen();
+
+                request
+                    .get("/api/issues/apitest")
+                    .query({ assigned_to: "amsaid1989" })
+                    .then((res) => {
+                        const id = res.body[0]["_id"];
+
+                        request
+                            .delete("/api/issues/apitest")
+                            .send({ _id: id })
+                            .then((res) => {
+                                request.close();
+
+                                assert.ok(res);
+                                assert.equal(res.status, 200);
+                                assert.isNotEmpty(res.body);
+                                assert.containsAllKeys(res.body, [
+                                    "result",
+                                    "_id",
+                                ]);
+                                assert.equal(
+                                    res.body["result"],
+                                    "successfully deleted"
+                                );
+                                assert.equal(res.body["_id"], id);
+
+                                done();
+                            });
+                    })
+                    .catch((err) => {
+                        console.error(err);
+
+                        assert.fail();
+
+                        done(err);
+                    });
+            });
+
+            it("Delete an issue with an invalid _id: DELETE request to /api/issues/apitest", function (done) {
+                const id = "2f853fac798ecb312af7803d";
+
+                chai.request(server)
+                    .delete("/api/issues/apitest")
+                    .send({ _id: id })
+                    .then((res) => {
+                        assert.ok(res);
+                        assert.equal(res.status, 200);
+                        assert.isNotEmpty(res.body);
+                        assert.containsAllKeys(res.body, ["error", "_id"]);
+                        assert.equal(res.body["error"], "could not delete");
+                        assert.equal(res.body["_id"], id);
+
+                        done();
+                    })
+                    .catch((err) => {
+                        console.error(err);
+
+                        assert.fail();
+
+                        done(err);
+                    });
+            });
+
+            it("Delete an issue with missing _id: DELETE request to /api/issues/apitest", function (done) {
+                chai.request(server)
+                    .delete("/api/issues/apitest")
+                    .then((res) => {
+                        assert.ok(res);
+                        assert.equal(res.status, 200);
+                        assert.isNotEmpty(res.body);
+                        assert.containsAllKeys(res.body, ["error"]);
+                        assert.equal(res.body.error, "missing _id");
+
+                        done();
+                    })
+                    .catch((err) => {
+                        console.error(err);
+
+                        assert.fail();
+
+                        done(err);
+                    });
+            });
+        });
     });
 });

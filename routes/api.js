@@ -90,6 +90,33 @@ module.exports = function (app) {
         })
 
         .delete(function (req, res) {
-            let project = req.params.project;
+            const project = req.params.project;
+
+            const id = req.body["_id"];
+
+            if (!id) {
+                res.json({ error: "missing _id" });
+            } else {
+                dbOp.removeIssue(id)
+                    .then((response) => {
+                        if (response.deletedCount === 1) {
+                            res.json({
+                                result: "successfully deleted",
+                                _id: id,
+                            });
+                        } else {
+                            res.json({
+                                error: "could not delete",
+                                _id: id,
+                            });
+                        }
+                    })
+                    .catch((err) => {
+                        res.json({
+                            error: "could not delete",
+                            _id: id,
+                        });
+                    });
+            }
         });
 };
