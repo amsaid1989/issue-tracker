@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
-process.env.NODE_ENV = "test";
 
 const apiRoutes = require("./routes/api.js");
 const fccTestingRoutes = require("./routes/fcctesting.js");
@@ -62,15 +61,22 @@ app.listen(process.env.PORT || 3000, function () {
     console.log("Listening on port " + process.env.PORT);
     if (process.env.NODE_ENV === "test") {
         console.log("Running Tests...");
-        setTimeout(function () {
-            try {
-                runner.run();
-            } catch (e) {
-                let error = e;
-                console.log("Tests are not valid:");
-                console.log(error);
-            }
-        }, 3500);
+        try {
+            runner.run();
+        } catch (e) {
+            let error = e;
+            console.log("Tests are not valid:");
+            console.log(error);
+        }
+        // setTimeout(function () {
+        //     try {
+        //         runner.run();
+        //     } catch (e) {
+        //         let error = e;
+        //         console.log("Tests are not valid:");
+        //         console.log(error);
+        //     }
+        // }, 3500);
     }
 });
 
