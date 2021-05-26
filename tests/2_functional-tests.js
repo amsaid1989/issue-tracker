@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 describe("Functional Tests", function () {
     describe("ROUTE /api/issues", function () {
         describe("POST /apitest", function () {
-            it("Create an issue with every field: POST request to /api/issues/apitest", function (done) {
+            it("Create an issue with every field: POST request to /api/issues/{project}", function (done) {
                 const issue = {
                     issue_title: "Test issue",
                     issue_text: "I have an issue",
@@ -41,7 +41,7 @@ describe("Functional Tests", function () {
                     });
             });
 
-            it("Create an issue with only required fields: POST request to /api/issues/apitest", function (done) {
+            it("Create an issue with only required fields: POST request to /api/issues/{project}", function (done) {
                 const issue = {
                     issue_title: "Test issue",
                     issue_text: "I have an issue",
@@ -70,7 +70,7 @@ describe("Functional Tests", function () {
                     });
             });
 
-            it("Create an issue with missing required fields: POST request to /api/issues/apitest", function (done) {
+            it("Create an issue with missing required fields: POST request to /api/issues/{project}", function (done) {
                 const issue = {
                     issue_title: "Test issue",
                     status_text: "I have an issue",
@@ -156,7 +156,7 @@ describe("Functional Tests", function () {
                     });
             });
 
-            it("View issues on a project: GET request to /api/issues/apitest", function (done) {
+            it("View issues on a project: GET request to /api/issues/{project}", function (done) {
                 chai.request(server)
                     .get("/api/issues/apitest")
                     .then((res) => {
@@ -176,7 +176,7 @@ describe("Functional Tests", function () {
                     });
             });
 
-            it("View issues on a project with one filter: GET request to /api/issues/apitest", function (done) {
+            it("View issues on a project with one filter: GET request to /api/issues/{project}", function (done) {
                 chai.request(server)
                     .get("/api/issues/apitest")
                     .query({ created_by: "Abdelrahman" })
@@ -197,7 +197,7 @@ describe("Functional Tests", function () {
                     });
             });
 
-            it("View issues on a project with multiple filters: GET request to /api/issues/apitest", function (done) {
+            it("View issues on a project with multiple filters: GET request to /api/issues/{project}", function (done) {
                 chai.request(server)
                     .get("/api/issues/apitest")
                     .query({
@@ -223,7 +223,7 @@ describe("Functional Tests", function () {
         });
 
         describe("PUT /apitest", function () {
-            it("Update one field on an issue: PUT request to /api/issues/apitest", function (done) {
+            it("Update one field on an issue: PUT request to /api/issues/{project}", function (done) {
                 const request = chai.request(server).keepOpen();
 
                 request
@@ -268,7 +268,7 @@ describe("Functional Tests", function () {
                     });
             });
 
-            it("Update multiple fields on an issue: PUT request to /api/issues/apitest", function (done) {
+            it("Update multiple fields on an issue: PUT request to /api/issues/{project}", function (done) {
                 const request = chai.request(server).keepOpen();
 
                 request
@@ -317,7 +317,7 @@ describe("Functional Tests", function () {
                     });
             });
 
-            it("Update an issue with missing _id: PUT request to /api/issues/apitest", function (done) {
+            it("Update an issue with missing _id: PUT request to /api/issues/{project}", function (done) {
                 const request = chai.request(server).keepOpen();
 
                 request
@@ -354,7 +354,7 @@ describe("Functional Tests", function () {
                     });
             });
 
-            it("Update an issue with no fields to update: PUT request to /api/issues/apitest", function (done) {
+            it("Update an issue with no fields to update: PUT request to /api/issues/{project}", function (done) {
                 const request = chai.request(server).keepOpen();
 
                 request
@@ -398,7 +398,7 @@ describe("Functional Tests", function () {
                     });
             });
 
-            it("Update an issue with an invalid _id: PUT request to /api/issues/apitest", function (done) {
+            it("Update an issue with an invalid _id: PUT request to /api/issues/{project}", function (done) {
                 const updateObj = {
                     _id: "766a76c797d98797f987e",
                     assigned_to: "amsaid1989",
@@ -428,7 +428,7 @@ describe("Functional Tests", function () {
         });
 
         describe("DELETE /apitest", function () {
-            it("Delete an issue: DELETE request to /api/issues/apitest", function (done) {
+            it("Delete an issue: DELETE request to /api/issues/{project}", function (done) {
                 const request = chai.request(server).keepOpen();
 
                 request
@@ -468,7 +468,7 @@ describe("Functional Tests", function () {
                     });
             });
 
-            it("Delete an issue with an invalid _id: DELETE request to /api/issues/apitest", function (done) {
+            it("Delete an issue with an invalid _id: DELETE request to /api/issues/{project}", function (done) {
                 const id = "2f853fac798ecb312af7803d";
 
                 chai.request(server)
@@ -493,7 +493,7 @@ describe("Functional Tests", function () {
                     });
             });
 
-            it("Delete an issue with missing _id: DELETE request to /api/issues/apitest", function (done) {
+            it("Delete an issue with missing _id: DELETE request to /api/issues/{project}", function (done) {
                 chai.request(server)
                     .delete("/api/issues/apitest")
                     .then((res) => {
