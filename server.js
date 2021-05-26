@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
+process.env.NODE_ENV = "test";
 
 const apiRoutes = require("./routes/api.js");
 const fccTestingRoutes = require("./routes/fcctesting.js");
@@ -51,15 +52,7 @@ dbOp.connect()
         app.use(function (req, res, next) {
             res.status(404).type("text").send("Not Found");
         });
-    })
-    .catch((err) => {
-        console.error(err);
-    });
 
-//Start our server and tests!
-app.listen(process.env.PORT || 3000, function () {
-    console.log("Listening on port " + process.env.PORT);
-    if (process.env.NODE_ENV === "test") {
         console.log("Running Tests...");
         setTimeout(function () {
             try {
@@ -70,7 +63,26 @@ app.listen(process.env.PORT || 3000, function () {
                 console.log(error);
             }
         }, 3500);
-    }
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+
+//Start our server and tests!
+app.listen(process.env.PORT || 3000, function () {
+    console.log("Listening on port " + process.env.PORT);
+    // if (process.env.NODE_ENV === "test") {
+    //     console.log("Running Tests...");
+    //     setTimeout(function () {
+    //         try {
+    //             runner.run();
+    //         } catch (e) {
+    //             let error = e;
+    //             console.log("Tests are not valid:");
+    //             console.log(error);
+    //         }
+    //     }, 3500);
+    // }
 });
 
 module.exports = app; //for testing
