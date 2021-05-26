@@ -46,7 +46,11 @@ module.exports = {
     },
 
     findIssues: function (searchObj) {
-        return Issue.find(searchObj).exec();
+        return Issue.find(searchObj)
+            .select(
+                "assigned_to status_text open _id issue_title issue_text created_by created_on updated_on"
+            )
+            .exec();
     },
 
     updateIssue: function (id, updateObj) {
