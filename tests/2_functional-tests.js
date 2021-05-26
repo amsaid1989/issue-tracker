@@ -336,7 +336,7 @@ describe("Functional Tests", function () {
                                 assert.equal(putRes.status, 200);
                                 assert.isNotEmpty(putRes.body);
                                 assert.containsAllKeys(putRes.body, ["error"]);
-                                assert.equal(putRes.body.error, "missing id");
+                                assert.equal(putRes.body.error, "missing _id");
 
                                 done();
                             });
