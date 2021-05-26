@@ -1,5 +1,5 @@
 require("dotenv").config();
-process.env.NODE_ENV = "test";
+process.env.NODE_ENV = "development";
 
 const mongoose = require("mongoose");
 const MongoMemoryServer = require("mongodb-memory-server").MongoMemoryServer;

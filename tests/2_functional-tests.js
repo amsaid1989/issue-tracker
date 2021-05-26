@@ -1,5 +1,5 @@
 require("dotenv").config();
-process.env.NODE_ENV = "test";
+process.env.NODE_ENV = "development";
 
 const chaiHttp = require("chai-http");
 const chai = require("chai");
@@ -85,6 +85,10 @@ describe("Functional Tests", function () {
                         assert.equal(res.status, 200);
                         assert.isNotEmpty(res.body);
                         assert.containsAllKeys(res.body, ["error"]);
+                        assert.equal(
+                            res.body.error,
+                            "required field(s) missing"
+                        );
 
                         done();
                     })
