@@ -10,6 +10,12 @@ const mongoose = require("mongoose");
 chai.use(chaiHttp);
 
 describe("Functional Tests", function () {
+    before(function (done) {
+        server.on("ready", () => {
+            done();
+        });
+    });
+
     describe("ROUTE /api/issues", function () {
         describe("POST /apitest", function () {
             it("Create an issue with every field: POST request to /api/issues/{project}", function (done) {

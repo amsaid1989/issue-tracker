@@ -20,7 +20,7 @@ function getURI() {
 module.exports = {
     connect: function () {
         return getURI().then((URI) => {
-            mongoose.connect(URI, {
+            return mongoose.connect(URI, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
                 useCreateIndex: true,

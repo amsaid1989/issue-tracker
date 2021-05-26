@@ -2,13 +2,9 @@ require("dotenv").config();
 process.env.NODE_ENV = "test";
 
 const mongoose = require("mongoose");
-const MongoMemoryServer = require("mongodb-memory-server").MongoMemoryServer;
 const chai = require("chai");
 const assert = chai.assert;
 const dbOp = require("../api/dbOp");
-
-const mongoServer = new MongoMemoryServer();
-mongoose.Promise = Promise;
 
 describe("Unit Tests", function () {
     describe("Database operations", function () {

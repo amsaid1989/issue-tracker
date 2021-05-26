@@ -24,6 +24,10 @@ dbOp.connect()
             console.log("connected to DB successfully");
         }
 
+        // Emit ready event which will be used to stop the functional tests
+        // from executing until the app is ready
+        app.emit("ready");
+
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: true }));
 
