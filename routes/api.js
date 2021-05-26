@@ -20,27 +20,73 @@ module.exports = function (app) {
             const project = req.params.project;
             const issue = { ...req.body, project, open: true };
 
-            dbOp.addIssue(issue)
-                .then((doc) => {
-                    res.json({
-                        _id: doc["_id"],
-                        issue_title: doc["issue_title"],
-                        issue_text: doc["issue_text"],
-                        created_by: doc["created_by"],
-                        open: doc["open"],
-                        assigned_to: doc["assigned_to"],
-                        status_text: doc["status_text"],
-                        created_on: doc["created_on"],
-                        updated_on: doc["updated_on"],
+            if (
+                !req.body.issue_title ||
+                !req.body.issue_text ||
+                !req.body.created_by
+            ) {
+                res.json({ error: "required field(s) missing" });
+            } else {
+                dbOp.addIssue(issue)
+                    .then((doc) => {
+                        res.json({
+                            _id: doc["_id"],
+                            issue_title: doc["issue_title"],
+                            issue_text: doc["issue_text"],
+                            created_by: doc["created_by"],
+                            open: doc["open"],
+                            assigned_to: doc["assigned_to"],
+                            status_text: doc["status_text"],
+                            created_on: doc["created_on"],
+                            updated_on: doc["updated_on"],
+                        });
+                    })
+                    .catch((err) => {
+                        res.send(`Error adding issue to the database: ${err}`);
                     });
-                })
-                .catch((err) => {
-                    res.send(`Error adding issue to the database: ${err}`);
-                });
+            }
         })
 
         .put(function (req, res) {
-            let project = req.params.project;
+            const project = req.params.project;
+
+            const id = req.body["_id"];
+            const updateFieldCount = Object.keys(req.body).filter(
+                (key) => key !== "_id"
+            ).length;
+
+            if (!id) {
+                res.json({
+                    error: "missing id",
+                });
+            } else if (updateFieldCount === 0) {
+                res.json({
+                    error: "no update field(s) sent",
+                    _id: req.body["_id"],
+                });
+            } else {
+                let updateObj = {};
+
+                for (let key of Object.keys(req.body)) {
+                    if (key !== "_id") {
+                        updateObj[key] = req.body[key];
+                    }
+                }
+
+                dbOp.updateIssue(id, updateObj)
+                    .then((doc) => {
+                        res.json({
+                            result: "successfully updated",
+                            _id: doc["_id"],
+                        });
+                    })
+                    .catch(() => {
+                        res.json({
+                            error: "could not update",
+                            _id: id,
+                        });
+                    });
+            }
         })
 
         .delete(function (req, res) {
