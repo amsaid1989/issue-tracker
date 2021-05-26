@@ -1,5 +1,5 @@
 require("dotenv").config();
-process.env.NODE_ENV = "development";
+process.env.NODE_ENV = "test";
 
 const mongoose = require("mongoose");
 const MongoMemoryServer = require("mongodb-memory-server").MongoMemoryServer;
@@ -28,6 +28,8 @@ describe("Unit Tests", function () {
                         assert.equal(doc.issue_text, issue.issue_text);
                         assert.equal(doc.created_by, issue.created_by);
                         assert.equal(doc.project, issue.project);
+                        assert.isEmpty(doc.assigned_to);
+                        assert.isEmpty(doc.status_text);
 
                         done();
                     })

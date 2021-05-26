@@ -34,8 +34,8 @@ module.exports = {
             issue_text: issueObj.issue_text,
             created_by: issueObj.created_by,
             project: issueObj.project,
-            assigned_to: issueObj.assigned_to,
-            status_text: issueObj.status_text,
+            assigned_to: issueObj.assigned_to || "",
+            status_text: issueObj.status_text || "",
         });
 
         return doc.save();
