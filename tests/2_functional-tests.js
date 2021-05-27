@@ -6,12 +6,13 @@ const chai = require("chai");
 const assert = chai.assert;
 const server = require("../server");
 const mongoose = require("mongoose");
+const dbOp = require("../api/dbOp");
 
 chai.use(chaiHttp);
 
 suite("Functional Tests", function () {
     suiteSetup(function (done) {
-        server.on("ready", () => {
+        dbOp.connect().then(() => {
             done();
         });
     });
